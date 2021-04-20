@@ -26,6 +26,13 @@ public class Dish {
 	public Dish() {
 	}
 	
+	
+	public Dish(String name, Type type) {
+		this.name = name;
+		this.type = type;
+	}
+
+
 	public Long getId() {
 		return id;
 	}
@@ -38,7 +45,7 @@ public class Dish {
 	public void setName(String name) {
 		this.name = name;
 	}
-		public Type getType() {
+	public Type getType() {
 		return type;
 	}
 	public void setType(Type type) {

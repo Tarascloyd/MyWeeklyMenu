@@ -1,5 +1,6 @@
 package com.taras.MyWeeklyMenu.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -16,11 +17,11 @@ public class DailyMenu {
 		@GeneratedValue(strategy=GenerationType.AUTO)
 		private Long id;
 		@ManyToMany(targetEntity=Dish.class)
-		private List<Dish> breakfast;
+		private List<Dish> breakfast = new ArrayList<>();
 		@ManyToMany(targetEntity=Dish.class)
-	  	private List<Dish> lunch;
+	  	private List<Dish> lunch = new ArrayList<>();
 		@ManyToMany(targetEntity=Dish.class)
-	  	private List<Dish> dinner;
+	  	private List<Dish> dinner = new ArrayList<>();
 	  	@ManyToOne
 	  	private Menu menu;
 	  	

@@ -1,5 +1,6 @@
 package com.taras.MyWeeklyMenu.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class Menu {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	@OneToMany(mappedBy = "menu")
-	private List<DailyMenu> days;
+	private List<DailyMenu> days = new ArrayList<>();
 	private Date startDate;
 	private Date createdAt;
 	

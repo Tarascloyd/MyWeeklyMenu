@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.taras.MyWeeklyMenu.entity.Dish;
+import com.taras.MyWeeklyMenu.entity.Dish.Type;
 import com.taras.MyWeeklyMenu.service.DishService;
 
 @Controller
@@ -30,6 +31,20 @@ public class DishController {
 		
 		// get dishes from db
 		List<Dish> theDishes = dishService.findAll();
+		
+		// prepopulate list, if nothing there
+		
+		if (theDishes.size() == 0) {
+			Dish dish1 = new Dish("Борщ", Type.SOUP);
+			Dish dish2 = new Dish("Солянка", Type.SOUP);
+			Dish dish3 = new Dish("Греческий салат", Type.SALAD);
+			Dish dish4 = new Dish("Котлеты куринные", Type.MAIN);
+			dishService.save(dish1);
+			dishService.save(dish2);
+			dishService.save(dish3);
+			dishService.save(dish4);
+			theDishes = dishService.findAll();
+		}
 		
 		// add to the spring model
 		theModel.addAttribute("dishes", theDishes);
