@@ -1,6 +1,7 @@
 package com.taras.MyWeeklyMenu.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -11,13 +12,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.taras.MyWeeklyMenu.entity.DailyMenu;
+import com.taras.MyWeeklyMenu.entity.Dish;
+import com.taras.MyWeeklyMenu.entity.Dish.Type;
 import com.taras.MyWeeklyMenu.service.DailyMenuService;
 import com.taras.MyWeeklyMenu.service.DishService;
 
 @Controller
 @RequestMapping("/daily")
+@SessionAttributes("menu")
 public class DailyMenuController {
 	private DailyMenuService dailyMenuService;
 	private DishService dishService;
@@ -27,40 +33,45 @@ public class DailyMenuController {
 		dishService = theDishService;
 	}
 	
-	@GetMapping("/list")
-	public String listDailyMenues(Model theModel) {
+	@GetMapping("/update")
+	public String update(@RequestParam("dayId") int theId, Model model) {
+		model.addAttribute("dailyMenu", dailyMenuService.findById(theId));
 		
-		// get dishes from db
-		List<DailyMenu> theDailyMenues = dailyMenuService.findAll();
+		List<Dish> theDishes = dishService.findAll();
+		Type[] types = Dish.Type.values();
+		for (Type type : types) {
+		      model.addAttribute(type.toString().toLowerCase(),
+		          filterByType(theDishes, type));
+		}
 		
-		// add to the spring model
-		theModel.addAttribute("daily", theDailyMenues);
-		
-		return "daily/list-menues";
-	}
-	
-	@GetMapping("/add")
-	public String add(Model model) {
-		model.addAttribute("dailyMenu", new DailyMenu());
-		model.addAttribute("dishes", dishService.findAll());
-		return "daily/add";
+		return "daily/update";
 	}
 	
 	@PostMapping("/save")
 	public String saveDailyMenu(
-			@ModelAttribute("dailyMenu") @Valid DailyMenu theDailyMenu,
-			BindingResult bindingResult, Model model) {
+			@ModelAttribute @Valid DailyMenu theDailyMenu, 
+			BindingResult bindingResult) {
 		
 		if (bindingResult.hasErrors()) {
-			return "daily/add";
+			return "daily/update";
 		}
 		else {		
 			// save the day
+			System.out.println(theDailyMenu.getId() + " " + theDailyMenu.getName());
+			for (Dish d : theDailyMenu.getBreakfast()) {
+				System.out.println(d.getName());
+			}
 			dailyMenuService.save(theDailyMenu);
 			
 			// use a redirect to prevent duplicate submissions
-			return "redirect:/daily/list";
+			return "redirect:/menu/back";
 		}
-	}
-	
+	};
+	 private List<Dish> filterByType(
+		      List<Dish> dishes, Type type) {
+		    return dishes
+		              .stream()
+		              .filter(x -> x.getType().equals(type))
+		              .collect(Collectors.toList());
+	 }
 }

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>MyWeeklyMenu</title>
+		<link rel="stylesheet" th:href="@{/styles.css}" />
+	</head>
+	
+	<body>
+	
+		<h3>Menu Directory</h3>
+		<a th:href="@{/}">Back to Home</a>
+		<hr>
+		
+		
+		<form method="POST" th:action="@{/menu/save}" th:object="${menu}">
+			<h1>Update dishes in your Menu</h1>
+			
+			<input type="hidden" th:field="*{id}" />
+			
+			<label for="name">Name: </label>
+			<input type="text" th:field="*{name}" placeholder="Name"/>
+			<span class="validationError"
+				th:if="${#fields.hasErrors('name')}"
+				th:errors="*{name}">Name error</span>
+			<br/>
+			
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th>Day</th>
+						<th>Breakfast</th>
+						<th>Lunch</th>
+						<th>Dinner</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="tempDay : ${menu.days}">
+						
+						<td th:text="${tempDay.name}" />
+						<td>
+							<div th:each="d : ${tempDay.breakfast}"
+								<p th:text="${d.name}">Dish</p>		
+							</div>
+						</td>
+						<td>
+							<div th:each="d : ${tempDay.lunch}"
+								<p th:text="${d.name}">Dish</p>		
+							</div>
+						</td>
+						<td>
+							<div th:each="d : ${tempDay.dinner}"
+								<p th:text="${d.name}">Dish</p>		
+							</div>
+						</td>
+						<td>
+							<!-- Add "update" button/link -->
+							<a th:href="@{/daily/update(dayId=${tempDay.id})}"
+							   class="btn btn-info btn-sm">
+								Update
+							</a>
+							
+							
+						</td>
+						
+						
+					</tr>
+				</tbody>		
+			</table>
+			
+			
+			
+			<input type="submit" value="Submit Day"/>
+		</form>
+		
+		<hr>
+		<a th:href="@{/daily/list}">Back to List of Days</a>
+	</body>
+</html>

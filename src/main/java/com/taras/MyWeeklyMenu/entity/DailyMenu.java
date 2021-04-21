@@ -25,6 +25,8 @@ public class DailyMenu {
 	  	@ManyToOne
 	  	private Menu menu;
 	  	
+	  	private String name;
+	  	
 	  	public DailyMenu() {
 		     
 	  	}
@@ -41,12 +43,15 @@ public class DailyMenu {
 		public void setBreakfast(List<Dish> breakfast) {
 			this.breakfast = breakfast;
 		}
+		
 		public List<Dish> getLunch() {
 			return lunch;
 		}
-		public void setLanch(List<Dish> lunch) {
+
+		public void setLunch(List<Dish> lunch) {
 			this.lunch = lunch;
 		}
+
 		public List<Dish> getDinner() {
 			return dinner;
 		}
@@ -60,6 +65,14 @@ public class DailyMenu {
 
 		public void setMenu(Menu menu) {
 			this.menu = menu;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
 		}
 	  	
 }

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>MyWeeklyMenu</title>
+		<link rel="stylesheet" th:href="@{/styles.css}" />
+	</head>
+	
+	<body>
+	
+		<h3>Daily Menu Directory</h3>
+		<a th:href="@{/}">Back to Home</a>
+		<hr>
+		
+		
+		<form method="POST" th:action="@{/daily/save}" th:object="${dailyMenu}">
+			<h1>Add Dishes to your DailyMenu</h1>
+			<p th:text="${dailyMenu.name}">Day</p>
+			<div th:if="${#fields.hasErrors()}">
+				<span class="validationError">
+					Please correct the problems below and resubmit.
+				</span>
+			</div>
+			<input type="hidden" th:field="*{id}" />
+			<input type="hidden" th:field="*{name}" />
+			<input type="hidden" th:field="*{menu}" />
+			
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th></th>
+						<th>Soup:</th>
+						<th>Main course:</th>
+						<th>Salad:</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<h3>Breakfast</h3>
+						</td>
+						<td>
+							<select id="breakfast" th:field="*{breakfast}" multiple="multiple">
+				    			<option th:value="0"></option>
+				    			<option th:each="d: ${soup}"
+	              					th:value="${d.id}" th:text="${d.name}">
+	    					</select>
+    					</td>
+    					<td>
+							<select id="breakfast" th:field="*{breakfast}" multiple="multiple">
+				    			<option th:value="0"></option>
+				    			<option th:each="d: ${main}"
+	              					th:value="${d.id}" th:text="${d.name}">
+	    					</select>
+    					</td>
+    					<td>
+							<select id="breakfast" th:field="*{breakfast}" multiple="multiple">
+				    			<option th:value="0"></option>
+				    			<option th:each="d: ${salad}"
+	              					th:value="${d.id}" th:text="${d.name}">
+	    					</select>
+    					</td>
+					</tr>
+					<tr>
+						<td>
+							<h3>Lunch</h3>
+						</td>
+						<td>
+							<select id="lunch" th:field="*{lunch}" multiple="multiple">
+				    			<option th:value="0"></option>
+				    			<option th:each="d: ${soup}"
+	              					th:value="${d.id}" th:text="${d.name}">
+	    					</select>
+    					</td>
+    					<td>
+							<select id="lunch" th:field="*{lunch}" multiple="multiple">
+				    			<option th:value="0"></option>
+				    			<option th:each="d: ${main}"
+	              					th:value="${d.id}" th:text="${d.name}">
+	    					</select>
+    					</td>
+    					<td>
+							<select id="lunch" th:field="*{lunch}" multiple="multiple">
+				    			<option th:value="0"></option>
+				    			<option th:each="d: ${salad}"
+	              					th:value="${d.id}" th:text="${d.name}">
+	    					</select>
+    					</td>
+					</tr>
+					<tr>
+						<td>
+							<h3>Dinner</h3>
+						</td>
+						<td>
+							<select id="dinner" th:field="*{dinner}" multiple="multiple">
+				    			<option th:value="0"></option>
+				    			<option th:each="d: ${soup}"
+	              					th:value="${d.id}" th:text="${d.name}">
+	    					</select>
+    					</td>
+    					<td>
+							<select id="dinner" th:field="*{dinner}" multiple="multiple">
+				    			<option th:value="0"></option>
+				    			<option th:each="d: ${main}"
+	              					th:value="${d.id}" th:text="${d.name}">
+	    					</select>
+    					</td>
+    					<td>
+							<select id="dinner" th:field="*{dinner}" multiple="multiple">
+				    			<option th:value="0"></option>
+				    			<option th:each="d: ${salad}"
+	              					th:value="${d.id}" th:text="${d.name}">
+	    					</select>
+    					</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			
+			
+			<input type="submit" value="Submit Day"/>
+		</form>
+		
+		<hr>
+		<a th:href="@{/daily/list}">Back to List of Days</a>
+	</body>
+</html>
