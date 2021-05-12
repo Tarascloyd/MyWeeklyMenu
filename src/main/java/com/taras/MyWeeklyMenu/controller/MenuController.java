@@ -93,10 +93,10 @@ public class MenuController {
 	public String update(@RequestParam("menuId") int theId,
 							Model theModel) {
 		
-		// get the dish from the service
+		// get the menu from the service
 		Menu theMenu = menuService.findById(theId);
 		
-		// set player as a model attribute to pre-populate the form
+		// set menu as a model attribute to pre-populate the form
 		theModel.addAttribute("menu", theMenu);
 		
 		// send over to our form
@@ -104,7 +104,7 @@ public class MenuController {
 	}
 	
 	@GetMapping("/back")
-	public String update() {
+	public String backToMenu() {
 	
 		return "menu/addMenu";			
 	}
